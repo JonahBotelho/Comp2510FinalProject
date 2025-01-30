@@ -3,4 +3,4 @@ project(omp2510FinalProject C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(omp2510FinalProject main.c)
+add_executable(omp2510FinalProject hospital_management.c)
