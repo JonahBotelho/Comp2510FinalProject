@@ -7,16 +7,23 @@
 #include <string.h>
 
 // Define the structure for a Patient record
-struct Patient {
+typedef struct {
     int patientID;            // Unique Patient ID
     char name[100];           // Full Name of the patient
     int age;                  // Age of the patient
     char diagnosis[200];      // Medical condition or reason for admission
     int roomNumber;           // Assigned room number in the hospital
-};
+} Patient;
+
+int addPatient(Patient patients, int patientCount);
+int displayPatients(Patient patients, int patientCount);
+int searchPatients(Patient patients, int patientCount, int patientID);
+int updatePatients(Patient patients, int patientCount, int patientID);
+int deletePatient(Patient patients, int patientCount);
+
 
 int main() {
-    struct Patient patients[50];  // Array to store patient records, maximum 50 patients
+    Patient patients[50];         // Array to store patient records, maximum 50 patients
     int patientCount = 0;         // Counter to keep track of how many patients have been added
     int choice;
 
@@ -71,5 +78,30 @@ int main() {
         }
     }
 
+    return 0;
+}
+
+int addPatient(Patient patients, int patientCount)
+{
+    return 0;
+}
+
+int displayPatients(Patient patients, int patientCount)
+{
+    return 0;
+}
+
+int searchPatients(Patient patients, int patientCount, int patientID)
+{
+    return 0;
+}
+
+int updatePatients(Patient patients, int patientCount, int patientID)
+{
+    return 0;
+}
+
+int deletePatient(Patient patients, int patientCount)
+{
     return 0;
 }

@@ -1,3 +1,3 @@
-/Users/colecampbell/CLionProjects/Comp2510FinalProject/cmake-build-debug/CMakeFiles/omp2510FinalProject.dir
-/Users/colecampbell/CLionProjects/Comp2510FinalProject/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/colecampbell/CLionProjects/Comp2510FinalProject/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/school/CLionProjects/Comp2510FinalProject/cmake-build-debug/CMakeFiles/omp2510FinalProject.dir
+C:/Users/school/CLionProjects/Comp2510FinalProject/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/school/CLionProjects/Comp2510FinalProject/cmake-build-debug/CMakeFiles/rebuild_cache.dir
