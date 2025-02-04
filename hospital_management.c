@@ -27,6 +27,8 @@ int displayPatients(Patient patients[], int *patientCount);
 int searchPatients(Patient patients[], int *patientCount, int patientID);
 int updatePatients(Patient patients[], int *patientCount, int patientID);
 int deletePatient(Patient patients[], int *patientCount);
+void waitForUser();
+void clearBuffer();
 
 
 int main()
@@ -54,7 +56,7 @@ int main()
                 addPatient(patients, &patientCount);
                 break;
             case 2:
-                // displayPatients(patients, patientCount);
+                displayPatients(patients, &patientCount);
                 break;
             case 3:
             {
@@ -108,11 +110,16 @@ int addPatient(Patient patients[], int *patientCount)
     // Patient ID
     printf("Enter Patient ID: ");
     scanf("%d", &patientID);
-    getchar();
-    if (patientID <= 0) //TODO validate patientID is unique
+    clearBuffer();
+
+
+    // TODO fix error message being displayed multiple times if user inputs multiple characters
+
+    while (patientID <= 0)
     {
-        printf("\nPatient ID is invalid. Please try again."); //TODO let user correct input
-        return 0;
+        printf("Patient ID is invalid. Please try again.");
+        scanf("%d", &patientID);
+        clearBuffer();
     }
 
     // Patient name
@@ -123,11 +130,12 @@ int addPatient(Patient patients[], int *patientCount)
     //Patient age
     printf("Enter Patient age: ");
     scanf("%d", &age);
-    getchar();
-    if (age < MIN_AGE || age > MAX_AGE)
+    clearBuffer();
+    while (age < MIN_AGE || age > MAX_AGE)
     {
-        printf("\nPatient age is invalid. Please try again.");
-        return 0;
+        printf("Patient age is invalid. Please try again.");
+        scanf("%d", &age);
+        clearBuffer();
     }
 
     // Diagnosis
@@ -138,10 +146,12 @@ int addPatient(Patient patients[], int *patientCount)
     // Room number
     printf("Enter Patient room number: ");
     scanf("%d", &roomNumber);
-    if (roomNumber <= 0)
+    clearBuffer();
+    while (roomNumber <= 0)
     {
-        printf("\nPatient room number is invalid. Please try again.");
-        return 0;
+        printf("Patient room number is invalid. Please try again.");
+        scanf("%d", &roomNumber);
+        clearBuffer();
     }
 
     patients[*patientCount].patientID = patientID;
@@ -153,11 +163,24 @@ int addPatient(Patient patients[], int *patientCount)
     puts("\nPatient successfully added to record");
 
     (*patientCount)++;
+
+    puts("\nPatient added successfully.");
+    waitForUser();
     return 0;
 }
 
 int displayPatients(Patient patients[], int *patientCount)
 {
+    for (int i = 0; i < *patientCount; i++)
+    {
+        printf("\nPatient ID: %d", patients[i].patientID);
+        printf("\nPatient name: %s", patients[i].name);
+        printf("\nPatient age: %d", patients[i].age);
+        printf("\nPatient diagnosis: %s", patients[i].diagnosis);
+        printf("\nPatient room number: %d", patients[i].roomNumber);
+        printf("\n");
+    }
+    waitForUser();
     return 0;
 }
 
@@ -174,4 +197,22 @@ int updatePatients(Patient patients[], int *patientCount, int patientID)
 int deletePatient(Patient patients[], int *patientCount)
 {
     return 0;
+}
+
+void waitForUser()
+{
+    printf("\nPress enter to continue.");
+    clearBuffer();
+}
+
+void clearBuffer()
+{
+    int c;
+
+    while (1) {
+        c = getchar();
+        if (c == '\n' || c == EOF) {
+            break;
+        }
+    }
 }
