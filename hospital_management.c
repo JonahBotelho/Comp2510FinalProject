@@ -112,9 +112,6 @@ int addPatient(Patient patients[], int *patientCount)
     scanf("%d", &patientID);
     clearBuffer();
 
-
-    // TODO fix error message being displayed multiple times if user inputs multiple characters
-
     while (patientID <= 0)
     {
         printf("Patient ID is invalid. Please try again.");
