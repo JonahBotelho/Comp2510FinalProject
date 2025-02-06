@@ -49,8 +49,8 @@ cmake_ninja_workdir = C$:/Users/school/CLionProjects/Comp2510FinalProject/cmake-
 
 build cmake_object_order_depends_target_omp2510FinalProject: phony || .
 
-build CMakeFiles/omp2510FinalProject.dir/main.c.obj: C_COMPILER__omp2510FinalProject_unscanned_Debug C$:/Users/school/CLionProjects/Comp2510FinalProject/main.c || cmake_object_order_depends_target_omp2510FinalProject
-  DEP_FILE = CMakeFiles\omp2510FinalProject.dir\main.c.obj.d
+build CMakeFiles/omp2510FinalProject.dir/hospital_management.c.obj: C_COMPILER__omp2510FinalProject_unscanned_Debug C$:/Users/school/CLionProjects/Comp2510FinalProject/hospital_management.c || cmake_object_order_depends_target_omp2510FinalProject
+  DEP_FILE = CMakeFiles\omp2510FinalProject.dir\hospital_management.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\omp2510FinalProject.dir
   OBJECT_FILE_DIR = CMakeFiles\omp2510FinalProject.dir
@@ -65,7 +65,7 @@ build CMakeFiles/omp2510FinalProject.dir/main.c.obj: C_COMPILER__omp2510FinalPro
 #############################################
 # Link the executable omp2510FinalProject.exe
 
-build omp2510FinalProject.exe: C_EXECUTABLE_LINKER__omp2510FinalProject_Debug CMakeFiles/omp2510FinalProject.dir/main.c.obj
+build omp2510FinalProject.exe: C_EXECUTABLE_LINKER__omp2510FinalProject_Debug CMakeFiles/omp2510FinalProject.dir/hospital_management.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\omp2510FinalProject.dir
