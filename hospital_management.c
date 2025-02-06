@@ -15,11 +15,11 @@
 // Define the structure for a Patient record
 typedef struct
 {
-    unsigned int patientID; // Unique Patient ID
+    int patientID; // Unique Patient ID
     char name[MAX_CHARS_IN_NAME]; // Full Name of the patient
-    unsigned int age; // Age of the patient
+    int age; // Age of the patient
     char diagnosis[MAX_CHARS_IN_DIAGNOSIS]; // Medical condition or reason for admission
-    unsigned int roomNumber; // Assigned room number in the hospital
+    int roomNumber; // Assigned room number in the hospital
 } Patient;
 
 int addPatient(Patient patients[], int *patientCount);
