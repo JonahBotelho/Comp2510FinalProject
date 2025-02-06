@@ -23,17 +23,11 @@ typedef struct
 } Patient;
 
 int addPatient(Patient patients[], int *patientCount);
-
-int displayPatients(Patient patients[], int *patientCount);
-
+int displayPatients(Patient patients[], const int *patientCount);
 int searchPatients(Patient patients[], int *patientCount, int patientID);
-
-int updatePatients(Patient patients[], int *patientCount, int patientID);
-
-int deletePatient(Patient patients[], int *patientCount);
-
+int dischargePatients(Patient patients[], int *patientCount, int patientID);
+int manageDoctorSchedules(Patient patients[], int *patientCount);
 void waitForUser();
-
 void clearBuffer();
 
 
@@ -50,8 +44,8 @@ int main()
         printf("1. Add Patient Record\n");
         printf("2. Display All Patient Records\n");
         printf("3. Search Patient Record\n");
-        printf("4. Update Patient Record\n");
-        printf("5. Delete Patient Record\n");
+        printf("4. Discharge Patient\n");
+        printf("5. Manage Doctor Schedules\n");
         printf("6. Exit\n");
         printf("Enter your choice: ");
 
@@ -171,7 +165,7 @@ int addPatient(Patient patients[], int *patientCount)
     return 0;
 }
 
-int displayPatients(Patient patients[], int *patientCount)
+int displayPatients(Patient patients[], const int *patientCount)
 {
     if (patients == NULL)
     {
@@ -202,12 +196,12 @@ int searchPatients(Patient patients[], int *patientCount, int patientID)
     return 0;
 }
 
-int updatePatients(Patient patients[], int *patientCount, int patientID)
+int dischargePatients(Patient patients[], int *patientCount, int patientID)
 {
     return 0;
 }
 
-int deletePatient(Patient patients[], int *patientCount)
+int manageDoctorSchedules(Patient patients[], int *patientCount)
 {
     return 0;
 }
