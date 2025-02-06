@@ -23,11 +23,17 @@ typedef struct
 } Patient;
 
 int addPatient(Patient patients[], int *patientCount);
+
 int displayPatients(Patient patients[], int *patientCount);
+
 int searchPatients(Patient patients[], int *patientCount, int patientID);
+
 int updatePatients(Patient patients[], int *patientCount, int patientID);
+
 int deletePatient(Patient patients[], int *patientCount);
+
 void waitForUser();
+
 void clearBuffer();
 
 
@@ -48,8 +54,9 @@ int main()
         printf("5. Delete Patient Record\n");
         printf("6. Exit\n");
         printf("Enter your choice: ");
-        scanf("%d", &choice);
 
+        scanf("%d", &choice);
+        clearBuffer();
         switch (choice)
         {
             case 1:
@@ -157,8 +164,6 @@ int addPatient(Patient patients[], int *patientCount)
     strncpy(patients[*patientCount].diagnosis, diagnosis, MAX_CHARS_IN_DIAGNOSIS);
     patients[*patientCount].roomNumber = roomNumber;
 
-    puts("\nPatient successfully added to record");
-
     (*patientCount)++;
 
     puts("\nPatient added successfully.");
@@ -168,13 +173,24 @@ int addPatient(Patient patients[], int *patientCount)
 
 int displayPatients(Patient patients[], int *patientCount)
 {
+    if (patients == NULL)
+    {
+        puts("Patient list cannot be NULL");
+    }
+
+    if (*patientCount == 0)
+    {
+        puts("Patient count cannot be 0");
+    }
+
+    printf("%-10s%-20s%-10s%-20s%-10s\n", "ID", "Name", "Age", "Diagnosis", "Room Number");
     for (int i = 0; i < *patientCount; i++)
     {
-        printf("\nPatient ID: %d", patients[i].patientID);
-        printf("\nPatient name: %s", patients[i].name);
-        printf("\nPatient age: %d", patients[i].age);
-        printf("\nPatient diagnosis: %s", patients[i].diagnosis);
-        printf("\nPatient room number: %d", patients[i].roomNumber);
+        printf("%-10d", patients[i].patientID);
+        printf("%-20s", patients[i].name);
+        printf("%-10d", patients[i].age);
+        printf("%-20s", patients[i].diagnosis);
+        printf("%-10d", patients[i].roomNumber);
         printf("\n");
     }
     waitForUser();
@@ -206,9 +222,11 @@ void clearBuffer()
 {
     int c;
 
-    while (1) {
+    while (1)
+    {
         c = getchar();
-        if (c == '\n' || c == EOF) {
+        if (c == '\n' || c == EOF)
+        {
             break;
         }
     }
