@@ -24,7 +24,7 @@ typedef struct
 
 int addPatient(Patient patients[], int *patientCount);
 int displayPatients(Patient patients[], const int *patientCount);
-int searchPatients(Patient patients[], int *patientCount, int patientID);
+int searchPatient(Patient patients[], int patientCount, int patientID);
 int dischargePatients(Patient patients[], int *patientCount, int patientID);
 int manageDoctorSchedules(Patient patients[], int *patientCount);
 void waitForUser();
@@ -64,7 +64,8 @@ int main()
                 int patientID;
                 printf("Enter Patient ID to search: ");
                 scanf("%d", &patientID);
-                // searchPatient(patients, patientCount, patientID);
+                clearBuffer();
+                searchPatient(patients, patientCount, patientID);
             }
             break;
             case 4:
@@ -72,6 +73,7 @@ int main()
                 int patientID;
                 printf("Enter Patient ID to update: ");
                 scanf("%d", &patientID);
+                clearBuffer();
                 // updatePatient(patients, patientCount, patientID);
             }
             break;
@@ -99,7 +101,7 @@ int addPatient(Patient patients[], int *patientCount)
     if (*patientCount >= MAX_PATIENTS)
     {
         printf("\nPatient count has reached its limit. Remove a patient and try again.");
-        return 0;
+        return -1;
     }
 
     int patientID;
@@ -152,11 +154,11 @@ int addPatient(Patient patients[], int *patientCount)
         clearBuffer();
     }
 
-    patients[*patientCount].patientID = patientID;
-    strncpy(patients[*patientCount].name, name, MAX_CHARS_IN_NAME);
-    patients[*patientCount].age = age;
-    strncpy(patients[*patientCount].diagnosis, diagnosis, MAX_CHARS_IN_DIAGNOSIS);
-    patients[*patientCount].roomNumber = roomNumber;
+    patients[*patientCount].patientID           = patientID;
+    strncpy(patients[*patientCount].name,         name, MAX_CHARS_IN_NAME);
+    patients[*patientCount].age                 = age;
+    strncpy(patients[*patientCount].diagnosis,    diagnosis, MAX_CHARS_IN_DIAGNOSIS);
+    patients[*patientCount].roomNumber          = roomNumber;
 
     (*patientCount)++;
 
@@ -170,11 +172,13 @@ int displayPatients(Patient patients[], const int *patientCount)
     if (patients == NULL)
     {
         puts("Patient list cannot be NULL");
+        return -1;
     }
 
     if (*patientCount == 0)
     {
         puts("Patient count cannot be 0");
+        return -1;
     }
 
     printf("%-10s%-20s%-10s%-20s%-10s\n", "ID", "Name", "Age", "Diagnosis", "Room Number");
@@ -191,8 +195,42 @@ int displayPatients(Patient patients[], const int *patientCount)
     return 0;
 }
 
-int searchPatients(Patient patients[], int *patientCount, int patientID)
+int searchPatient(Patient patients[], int patientCount, int patientID)
 {
+    if (patients == NULL)
+    {
+        puts("Patient list cannot be NULL");
+        return -1;
+    }
+
+    if (patientCount == 0)
+    {
+        puts("Patient count cannot be 0");
+        return -1;
+    }
+
+    if (patientID < 0)
+    {
+        puts("Patient ID cannot be less than 0");
+        return -1;
+    }
+
+    for (int i = 0; i < patientCount; i++)
+    {
+        if (patientID == patients[i].patientID)
+        {
+            puts("Patient found.");
+            printf("Patient ID: %d\n", patients[i].patientID);
+            printf("Patient name: %s\n", patients[i].name);
+            printf("Patient age: %d\n", patients[i].age);
+            printf("Patient diagnosis: %s\n", patients[i].diagnosis);
+            printf("Patient room number: %d\n", patients[i].roomNumber);
+            waitForUser();
+            return 0;
+        }
+    }
+
+    printf("\nPatient %d was not found in the system.", patientID);
     return 0;
 }
 
