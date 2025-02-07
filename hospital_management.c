@@ -23,11 +23,17 @@ typedef struct
 } Patient;
 
 int addPatient(Patient patients[], int *patientCount);
+
 int displayPatients(Patient patients[], const int *patientCount);
+
 int searchPatient(Patient patients[], int patientCount, int patientID);
-int dischargePatients(Patient patients[], int *patientCount, int patientID);
-int manageDoctorSchedules(Patient patients[], int *patientCount);
+
+void dischargePatient(Patient patients[], const int *patientCount, int patientID);
+
+void manageDoctorSchedules(Patient patients[], int *patientCount);
+
 void waitForUser();
+
 void clearBuffer();
 
 
@@ -42,8 +48,8 @@ int main()
         // Display the menu
         printf("\nHospital Management System\n");
         printf("1. Add Patient Record\n");
-        printf("2. Display All Patient Records\n");
-        printf("3. Search Patient Record\n");
+        printf("2. View All Patients\n");
+        printf("3. Search Patient By ID\n");
         printf("4. Discharge Patient\n");
         printf("5. Manage Doctor Schedules\n");
         printf("6. Exit\n");
@@ -71,18 +77,15 @@ int main()
             case 4:
             {
                 int patientID;
-                printf("Enter Patient ID to update: ");
+                printf("Enter Patient ID to discharge: ");
                 scanf("%d", &patientID);
                 clearBuffer();
-                // updatePatient(patients, patientCount, patientID);
+                dischargePatient(patients, patientCount, patientID);
             }
             break;
             case 5:
             {
-                int patientID;
-                printf("Enter Patient ID to delete: ");
-                scanf("%d", &patientID);
-                // deletePatient(patients, &patientCount, patientID);
+                // SCHEDULING SYSTEM
             }
             break;
             case 6:
@@ -154,11 +157,11 @@ int addPatient(Patient patients[], int *patientCount)
         clearBuffer();
     }
 
-    patients[*patientCount].patientID           = patientID;
-    strncpy(patients[*patientCount].name,         name, MAX_CHARS_IN_NAME);
-    patients[*patientCount].age                 = age;
-    strncpy(patients[*patientCount].diagnosis,    diagnosis, MAX_CHARS_IN_DIAGNOSIS);
-    patients[*patientCount].roomNumber          = roomNumber;
+    patients[*patientCount].patientID = patientID;
+    strncpy(patients[*patientCount].name, name, MAX_CHARS_IN_NAME);
+    patients[*patientCount].age = age;
+    strncpy(patients[*patientCount].diagnosis, diagnosis, MAX_CHARS_IN_DIAGNOSIS);
+    patients[*patientCount].roomNumber = roomNumber;
 
     (*patientCount)++;
 
@@ -234,14 +237,40 @@ int searchPatient(Patient patients[], int patientCount, int patientID)
     return 0;
 }
 
-int dischargePatients(Patient patients[], int *patientCount, int patientID)
+void dischargePatient(Patient patients[], const int *patientCount, int patientID)
 {
-    return 0;
+    int found = 0;
+
+    for (int i = 0; i < *patientCount; i++)
+    {
+        if (patients[i].patientID == patientID)
+        {
+            found = 1;
+
+            printf("Discharging Patient ID: %d (%s)...\n", patients[i].patientID, patients[i].name);
+
+            // Shift records to fill the gap left by the discharged patient
+            for (int j = i; j < *patientCount - 1; j++)
+            {
+                patients[j] = patients[j + 1];
+            }
+
+            // WHAT IS THIS DOING?? I DON'T THINK IT'S A GLOBAL VARIABLE
+            *patientCount--; // Reduce patient count
+            printf("Patient ID %d successfully discharged.\n", patientID);
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        printf("Patient with ID %d not found.\n", patientID);
+    }
 }
 
-int manageDoctorSchedules(Patient patients[], int *patientCount)
+void manageDoctorSchedules(Patient patients[], int *patientCount)
 {
-    return 0;
+
 }
 
 void waitForUser()
