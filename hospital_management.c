@@ -11,6 +11,8 @@
 #define MAX_CHARS_IN_DIAGNOSIS 200
 #define MIN_AGE 0
 #define MAX_AGE 150
+#define DAYS_IN_WEEK 7
+#define SHIFTS_IN_DAY 3
 
 // Define the structure for a Patient record
 typedef struct
@@ -23,23 +25,20 @@ typedef struct
 } Patient;
 
 int addPatient(Patient patients[], int *patientCount);
-
 int displayPatients(Patient patients[], const int *patientCount);
-
 int searchPatient(Patient patients[], int patientCount, int patientID);
-
 void dischargePatient(Patient patients[], const int *patientCount, int patientID);
-
-void manageDoctorSchedules(Patient patients[], int *patientCount);
-
+void manageDoctorSchedules(int doctorSchedule[7][3]);
+void assignDoctors(int doctorSchedule[7][3]);
+void displayDoctorSchedule(int doctorSchedule[7][3]);
 void waitForUser();
-
 void clearBuffer();
 
 
 int main()
 {
     Patient patients[MAX_PATIENTS]; // Array to store patient records, maximum 50 patients
+    int doctorSchedule[7][3];
     int patientCount = 0; // Counter to keep track of how many patients have been added
     int choice;
 
@@ -80,17 +79,17 @@ int main()
                 printf("Enter Patient ID to discharge: ");
                 scanf("%d", &patientID);
                 clearBuffer();
-                dischargePatient(patients, patientCount, patientID);
+                dischargePatient(patients, &patientCount, patientID);
             }
             break;
             case 5:
             {
-                // SCHEDULING SYSTEM
+                manageDoctorSchedules(doctorSchedule);
             }
             break;
             case 6:
                 printf("Exiting the system...\n");
-                return 0;
+                return 1;
             default:
                 printf("Invalid choice. Please try again.\n");
         }
@@ -114,7 +113,7 @@ int addPatient(Patient patients[], int *patientCount)
     int roomNumber;
 
     // Patient ID
-    printf("Enter Patient ID: ");
+    printf("\nEnter Patient ID: ");
     scanf("%d", &patientID);
     clearBuffer();
 
@@ -172,19 +171,13 @@ int addPatient(Patient patients[], int *patientCount)
 
 int displayPatients(Patient patients[], const int *patientCount)
 {
-    if (patients == NULL)
-    {
-        puts("Patient list cannot be NULL");
-        return -1;
-    }
-
     if (*patientCount == 0)
     {
-        puts("Patient count cannot be 0");
+        puts("There are no patients.");
         return -1;
     }
 
-    printf("%-10s%-20s%-10s%-20s%-10s\n", "ID", "Name", "Age", "Diagnosis", "Room Number");
+    printf("\n%-10s%-20s%-10s%-20s%-10s\n", "ID", "Name", "Age", "Diagnosis", "Room Number");
     for (int i = 0; i < *patientCount; i++)
     {
         printf("%-10d", patients[i].patientID);
@@ -255,8 +248,6 @@ void dischargePatient(Patient patients[], const int *patientCount, int patientID
                 patients[j] = patients[j + 1];
             }
 
-            // WHAT IS THIS DOING?? I DON'T THINK IT'S A GLOBAL VARIABLE
-            *patientCount--; // Reduce patient count
             printf("Patient ID %d successfully discharged.\n", patientID);
             break;
         }
@@ -268,9 +259,122 @@ void dischargePatient(Patient patients[], const int *patientCount, int patientID
     }
 }
 
-void manageDoctorSchedules(Patient patients[], int *patientCount)
+void manageDoctorSchedules(int doctorSchedule[7][3])
 {
+    int choice;
 
+    while (1)
+    {
+        // Display the menu
+        printf("\nDoctor Scheduling\n");
+        printf("1. Assign Doctors To Shift\n");
+        printf("2. View Doctor Schedule\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+
+        scanf("%d", &choice);
+        clearBuffer();
+        switch (choice)
+        {
+            case 1:
+                assignDoctors(doctorSchedule);
+            break;
+            case 2:
+                displayDoctorSchedule(doctorSchedule);
+            break;
+            case 3:
+            {
+                printf("Exiting the system...\n");
+                return;
+            }
+            break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+}
+
+void assignDoctors(int doctorSchedule[7][3]) {
+    int choice;
+
+    do {
+        int dayChoice, shiftChoice, doctorsToAdd;
+
+        // Day selection with input validation
+        do {
+            printf("\nSelect the day to assign (1-7):\n");
+            printf("(1) Monday\n(2) Tuesday\n(3) Wednesday\n(4) Thursday\n");
+            printf("(5) Friday\n(6) Saturday\n(7) Sunday\n");
+            printf("Enter your choice: ");
+            if (scanf("%d", &dayChoice) != 1 || dayChoice < 1 || dayChoice > 7) {
+                printf("Invalid input. Please enter a number between 1 and 7.\n");
+                clearBuffer();
+            } else {
+                break;
+            }
+        } while (1);
+
+        // Shift selection with input validation
+        do {
+            printf("\nSelect the shift to assign (1-3):\n");
+            printf("(1) Morning\n(2) Afternoon\n(3) Evening\n");
+            printf("Enter your choice: ");
+            if (scanf("%d", &shiftChoice) != 1 || shiftChoice < 1 || shiftChoice > 3) {
+                printf("Invalid input. Please enter a number between 1 and 3.\n");
+                clearBuffer();
+            } else {
+                break;
+            }
+        } while (1);
+
+        // Number of doctors input validation
+        do {
+            printf("\nHow many doctors would you like to assign to this shift? ");
+            if (scanf("%d", &doctorsToAdd) != 1 || doctorsToAdd < 0) {
+                printf("Invalid input. Please enter a valid number (0 or more).\n");
+                clearBuffer();
+            } else {
+                break;
+            }
+        } while (1);
+
+        // Assign doctors to the selected shift
+        doctorSchedule[dayChoice - 1][shiftChoice - 1] = doctorsToAdd;
+        printf("\nSuccessfully assigned %d doctor(s) to %s - %s shift.\n",
+               doctorsToAdd,
+               (dayChoice == 1) ? "Monday" : (dayChoice == 2) ? "Tuesday" :
+               (dayChoice == 3) ? "Wednesday" : (dayChoice == 4) ? "Thursday" :
+               (dayChoice == 5) ? "Friday" : (dayChoice == 6) ? "Saturday" : "Sunday",
+               (shiftChoice == 1) ? "Morning" : (shiftChoice == 2) ? "Afternoon" : "Evening");
+
+        // Ask if the user wants to continue assigning doctors
+        printf("\nWould you like to assign another shift?\n");
+        printf("(1) Yes\n(2) No\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        clearBuffer();
+
+        if (choice != 1) {
+            printf("Exiting assignment process...\n");
+        }
+
+    } while (choice == 1);
+}
+
+void displayDoctorSchedule(int doctorSchedule[7][3])
+{
+    printf("\t\t\t%-10s%-10s%-10s%-10s%-10s%-10s%-10s", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+
+    for (int i = 0; i < SHIFTS_IN_DAY; i++)
+    {
+        i == 0 ? printf("\nMorning\t\t") : i == 1 ? printf("\nAfternoon\t") : printf("\nEvening\t\t");
+
+        for (int j = 0; j < DAYS_IN_WEEK; j++)
+        {
+            printf("%-10d", doctorSchedule[j][i]);
+        }
+        printf("\n");
+    }
 }
 
 void waitForUser()
