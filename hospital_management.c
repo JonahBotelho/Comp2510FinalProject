@@ -1,7 +1,7 @@
-//
-// Created by Cole Campbell and Jonah Botelho
-// Purpose...
-//
+/**
+ * @author Cole Campbell
+ * @author Jonah Botelho
+ */
 
 #include <stdio.h>
 #include <string.h>
@@ -34,7 +34,10 @@ void displayDoctorSchedule(int doctorSchedule[7][3]);
 void waitForUser();
 void clearBuffer();
 
-
+/**
+ * Entry point for the program, displays a menu for the user, and calls support functions depending on their input.
+ *
+ */
 int main()
 {
     Patient patients[MAX_PATIENTS]; // Array to store patient records, maximum 50 patients
@@ -98,6 +101,15 @@ int main()
     return 0;
 }
 
+/**
+ * Adds a new patient to the hospital's database of patients.
+ * Prompts the user for patient's information, and validates it.
+ *
+ * @param patients array of paitents.
+ * @param patientCount total number of current patients.
+ * @return 0 if program is ran successfully
+ *        -1 if expected error is encountered
+ */
 int addPatient(Patient patients[], int *patientCount)
 {
     if (*patientCount >= MAX_PATIENTS)
@@ -169,6 +181,14 @@ int addPatient(Patient patients[], int *patientCount)
     return 0;
 }
 
+/**
+ * Displays all patients currently registered in the hospital.
+ *
+ * @param patients array of patients
+ * @param patientCount number of patients
+ * @return 0 if program is ran successfully
+ *        -1 if expected error is encountered
+ */
 int displayPatients(Patient patients[], const int *patientCount)
 {
     if (*patientCount == 0)
@@ -191,6 +211,14 @@ int displayPatients(Patient patients[], const int *patientCount)
     return 0;
 }
 
+/**
+ * Searches for a specific patient in the database.
+ *
+ * @param patients array of patients
+ * @param patientCount total number of patients
+ * @return 0 if program is ran successfully
+ *        -1 if expected error is encountered
+ */
 int searchPatient(Patient patients[], int patientCount, int patientID)
 {
     if (patients == NULL)
@@ -230,6 +258,13 @@ int searchPatient(Patient patients[], int patientCount, int patientID)
     return 0;
 }
 
+/**
+ * Discharges a patient from the hospital, removing them from the database.
+ *
+ * @param patients array of patients
+ * @param patientCount total number of patients
+ * @param patientID ID of patient to be removed
+ */
 void dischargePatient(Patient patients[], const int *patientCount, int patientID)
 {
     int found = 0;
@@ -259,6 +294,10 @@ void dischargePatient(Patient patients[], const int *patientCount, int patientID
     }
 }
 
+/**
+ * TODO add documentation
+ * @param doctorSchedule
+ */
 void manageDoctorSchedules(int doctorSchedule[7][3])
 {
     int choice;
@@ -294,6 +333,10 @@ void manageDoctorSchedules(int doctorSchedule[7][3])
     }
 }
 
+/**
+ * TODO add documentation
+ * @param doctorSchedule
+ */
 void assignDoctors(int doctorSchedule[7][3]) {
     int choice;
 
@@ -361,6 +404,10 @@ void assignDoctors(int doctorSchedule[7][3]) {
     } while (choice == 1);
 }
 
+/**
+ *
+ * TODO add documentation
+ */
 void displayDoctorSchedule(int doctorSchedule[7][3])
 {
     printf("\t\t\t%-10s%-10s%-10s%-10s%-10s%-10s%-10s", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
@@ -377,12 +424,19 @@ void displayDoctorSchedule(int doctorSchedule[7][3])
     }
 }
 
+/**
+ * Pauses the program until the user enters an input.
+ * Used to indicate that an action has been completed, and let the user view the result.
+ */
 void waitForUser()
 {
     printf("\nPress enter to continue.");
     clearBuffer();
 }
 
+/**
+ * Clears the input buffer using getchar() several times.
+ */
 void clearBuffer()
 {
     int c;
