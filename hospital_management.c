@@ -255,6 +255,7 @@ int searchPatient(Patient patients[], int patientCount, int patientID)
     }
 
     printf("\nPatient %d was not found in the system.", patientID);
+    waitForUser();
     return 0;
 }
 
@@ -292,6 +293,7 @@ void dischargePatient(Patient patients[], const int *patientCount, int patientID
     {
         printf("Patient with ID %d not found.\n", patientID);
     }
+    waitForUser();
 }
 
 /**
@@ -319,16 +321,13 @@ void manageDoctorSchedules(int doctorSchedule[7][3])
         {
             case 1:
                 assignDoctors(doctorSchedule);
-            break;
+                break;
             case 2:
                 displayDoctorSchedule(doctorSchedule);
-            break;
+                break;
             case 3:
-            {
                 printf("Exiting the system...\n");
                 return;
-            }
-            break;
             default:
                 printf("Invalid choice. Please try again.\n");
         }
@@ -454,3 +453,4 @@ void clearBuffer()
         }
     }
 }
+
