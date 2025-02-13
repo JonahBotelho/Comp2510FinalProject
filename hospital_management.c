@@ -295,8 +295,10 @@ void dischargePatient(Patient patients[], const int *patientCount, int patientID
 }
 
 /**
- * TODO add documentation
- * @param doctorSchedule
+ * Enters the doctor scheduling system, which allows users to add doctors to shifts,
+ * and display the current shift schedule for the week.
+ *
+ * @param doctorSchedule the array for the doctor schedule
  */
 void manageDoctorSchedules(int doctorSchedule[7][3])
 {
@@ -334,8 +336,9 @@ void manageDoctorSchedules(int doctorSchedule[7][3])
 }
 
 /**
- * TODO add documentation
- * @param doctorSchedule
+ * A helper function to assign doctors to certain days and shifts.
+ *
+ * @param doctorSchedule the array for the doctor schedule
  */
 void assignDoctors(int doctorSchedule[7][3]) {
     int choice;
@@ -405,8 +408,9 @@ void assignDoctors(int doctorSchedule[7][3]) {
 }
 
 /**
+ * A helper function to display the entire 2-D array of the doctor schedule.
  *
- * TODO add documentation
+ * @param doctorSchedule the array for the doctor schedule
  */
 void displayDoctorSchedule(int doctorSchedule[7][3])
 {
