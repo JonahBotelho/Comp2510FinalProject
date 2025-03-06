@@ -25,13 +25,21 @@ typedef struct
 } Patient;
 
 int addPatient(Patient patients[], int *patientCount);
+
 int displayPatients(Patient patients[], const int *patientCount);
+
 int searchPatient(Patient patients[], int patientCount, int patientID);
+
 void dischargePatient(Patient patients[], const int *patientCount, int patientID);
+
 void manageDoctorSchedules(int doctorSchedule[7][3]);
+
 void assignDoctors(int doctorSchedule[7][3]);
+
 void displayDoctorSchedule(int doctorSchedule[7][3]);
+
 void waitForUser();
+
 void clearBuffer();
 
 /**
@@ -135,6 +143,8 @@ int addPatient(Patient patients[], int *patientCount)
         scanf("%d", &patientID);
         clearBuffer();
     }
+
+    // TODO ADD UNIQUE PATIENT ID CHECK
 
     // Patient name
     printf("Enter Patient name: ");
@@ -339,57 +349,78 @@ void manageDoctorSchedules(int doctorSchedule[7][3])
  *
  * @param doctorSchedule the array for the doctor schedule
  */
-void assignDoctors(int doctorSchedule[7][3]) {
+void assignDoctors(int doctorSchedule[7][3])
+{
     int choice;
 
-    do {
+    do
+    {
         int dayChoice, shiftChoice, doctorsToAdd;
 
         // Day selection with input validation
-        do {
+        do
+        {
             printf("\nSelect the day to assign (1-7):\n");
             printf("(1) Monday\n(2) Tuesday\n(3) Wednesday\n(4) Thursday\n");
             printf("(5) Friday\n(6) Saturday\n(7) Sunday\n");
             printf("Enter your choice: ");
-            if (scanf("%d", &dayChoice) != 1 || dayChoice < 1 || dayChoice > 7) {
+            if (scanf("%d", &dayChoice) != 1 || dayChoice < 1 || dayChoice > 7)
+            {
                 printf("Invalid input. Please enter a number between 1 and 7.\n");
                 clearBuffer();
-            } else {
+            } else
+            {
                 break;
             }
         } while (1);
 
         // Shift selection with input validation
-        do {
+        do
+        {
             printf("\nSelect the shift to assign (1-3):\n");
             printf("(1) Morning\n(2) Afternoon\n(3) Evening\n");
             printf("Enter your choice: ");
-            if (scanf("%d", &shiftChoice) != 1 || shiftChoice < 1 || shiftChoice > 3) {
+            if (scanf("%d", &shiftChoice) != 1 || shiftChoice < 1 || shiftChoice > 3)
+            {
                 printf("Invalid input. Please enter a number between 1 and 3.\n");
                 clearBuffer();
-            } else {
+            } else
+            {
                 break;
             }
         } while (1);
 
         // Number of doctors input validation
-        do {
+        do
+        {
             printf("\nHow many doctors would you like to assign to this shift? ");
-            if (scanf("%d", &doctorsToAdd) != 1 || doctorsToAdd < 0) {
+            if (scanf("%d", &doctorsToAdd) != 1 || doctorsToAdd < 0)
+            {
                 printf("Invalid input. Please enter a valid number (0 or more).\n");
                 clearBuffer();
-            } else {
+            } else
+            {
                 break;
             }
         } while (1);
 
         // Assign doctors to the selected shift
-        doctorSchedule[dayChoice - 1][shiftChoice - 1] = doctorsToAdd;
+        doctorSchedule[dayChoice - 1][shiftChoice - 1] = doctorsToAdd; //enum todo
         printf("\nSuccessfully assigned %d doctor(s) to %s - %s shift.\n",
                doctorsToAdd,
-               (dayChoice == 1) ? "Monday" : (dayChoice == 2) ? "Tuesday" :
-               (dayChoice == 3) ? "Wednesday" : (dayChoice == 4) ? "Thursday" :
-               (dayChoice == 5) ? "Friday" : (dayChoice == 6) ? "Saturday" : "Sunday",
+               (dayChoice == 1)
+                   ? "Monday"
+                   : (dayChoice == 2)
+                         ? "Tuesday"
+                         : (dayChoice == 3)
+                               ? "Wednesday"
+                               : (dayChoice == 4)
+                                     ? "Thursday"
+                                     : (dayChoice == 5)
+                                           ? "Friday"
+                                           : (dayChoice == 6)
+                                                 ? "Saturday"
+                                                 : "Sunday",
                (shiftChoice == 1) ? "Morning" : (shiftChoice == 2) ? "Afternoon" : "Evening");
 
         // Ask if the user wants to continue assigning doctors
@@ -399,10 +430,10 @@ void assignDoctors(int doctorSchedule[7][3]) {
         scanf("%d", &choice);
         clearBuffer();
 
-        if (choice != 1) {
+        if (choice != 1)
+        {
             printf("Exiting assignment process...\n");
         }
-
     } while (choice == 1);
 }
 
@@ -413,7 +444,8 @@ void assignDoctors(int doctorSchedule[7][3]) {
  */
 void displayDoctorSchedule(int doctorSchedule[7][3])
 {
-    printf("\t\t\t%-10s%-10s%-10s%-10s%-10s%-10s%-10s", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+    printf("\t\t\t%-10s%-10s%-10s%-10s%-10s%-10s%-10s", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+           "Saturday", "Sunday");
 
     for (int i = 0; i < SHIFTS_IN_DAY; i++)
     {
@@ -453,4 +485,3 @@ void clearBuffer()
         }
     }
 }
-
