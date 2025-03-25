@@ -548,6 +548,12 @@ void freePatientList(PatientList* list);
 void clearBuffer();
 void waitForUser();
 
+/**
+ * Drives the program.
+ * Displays main menu, then calls on supporting functions to allow users to complete tasks.
+ *
+ * @return 0 if program executes successfully.
+ */
 int main() {
     PatientList patients;
     DoctorSchedule schedule;
@@ -686,6 +692,11 @@ int addPatient(PatientList* list) {
     return 0;
 }
 
+/**
+ * Displays all patients currently in this hospital.
+ *
+ * @param list patient records
+ */
 void displayPatients(const PatientList* list) {
     if (list->count == 0) {
         printf("No patients in the system.\n");
@@ -713,6 +724,12 @@ PatientNode* searchPatient(const PatientList* list, int patientID) {
     return NULL;
 }
 
+/**
+ * Removes a patient with the given ID from the patients list.
+ *
+ * @param list patient records
+ * @param patientID ID of given patient
+ */
 void dischargePatient(PatientList* list, int patientID) {
     PatientNode *current = list->head, *prev = NULL;
 
@@ -737,6 +754,11 @@ void dischargePatient(PatientList* list, int patientID) {
     list->count--;
 }
 
+/**
+ * Manages the doctor schedules menu, allowing the user to assign, remove, or view doctor shifts.
+ *
+ * @param schedule doctor schedule
+ */
 void manageDoctorSchedules(DoctorSchedule* schedule) {
     int choice;
     while (1) {
@@ -769,6 +791,11 @@ void manageDoctorSchedules(DoctorSchedule* schedule) {
     }
 }
 
+/**
+ * Allows the user to assign doctors to shifts in the current week.
+ * 
+ * @param schedule doctor schedule
+ */
 void assignDoctors(DoctorSchedule* schedule) {
     int dayChoice, shiftChoice, doctorsToAdd, choice;
 
@@ -816,6 +843,11 @@ void assignDoctors(DoctorSchedule* schedule) {
     } while (choice == 1);
 }
 
+/**
+ * Displays the amount of doctors schedules for each shift in the current week.
+ *
+ * @param schedule doctor schedule
+ */
 void displayDoctorSchedule(const DoctorSchedule* schedule) {
     printf("\n\t\tWeekly Doctor Schedule\n");
     printf("\t\t\t%-10s%-10s%-10s%-10s%-10s%-10s%-10s\n",
@@ -838,6 +870,12 @@ void displayDoctorSchedule(const DoctorSchedule* schedule) {
     printf("\n");
 }
 
+/**
+ * Generates a report file, and prints patient records and doctor schedules to it.
+ *
+ * @param list patient records
+ * @param schedule doctor schedule
+ */
 void generateReports(const PatientList* list, const DoctorSchedule* schedule) {
     printf("\nGenerating Reports...\n");
 
@@ -893,6 +931,13 @@ void generateReports(const PatientList* list, const DoctorSchedule* schedule) {
     }
 }
 
+/**
+ * Save patient records and doctor schedules in two files.
+ * Used to ensure the information can be restored upon a system restart.
+ *
+ * @param list patient records
+ * @param schedule doctor schedule
+ */
 void saveData(const PatientList* list, const DoctorSchedule* schedule) {
     FILE* patientFile = fopen(FILENAME_PATIENTS, "wb");
     if (!patientFile) {
@@ -918,6 +963,14 @@ void saveData(const PatientList* list, const DoctorSchedule* schedule) {
     printf("Data saved successfully.\n");
 }
 
+/**
+ * Reads patient records and doctor schedules from two files, and saved them in the program's memory.
+ * Used to restore system data after a restart.
+ *
+ * @param list patient records
+ * @param schedule doctor schedule
+ * @return
+ */
 int loadData(PatientList* list, DoctorSchedule* schedule) {
     FILE* patientFile = fopen(FILENAME_PATIENTS, "rb");
     if (!patientFile) {
@@ -948,6 +1001,11 @@ int loadData(PatientList* list, DoctorSchedule* schedule) {
     return 1;
 }
 
+/**
+ * Frees the memory that was previously allocated to PatientList
+ *
+ * @param list list to free memory from.
+ */
 void freePatientList(PatientList* list) {
     PatientNode* current = list->head;
     while (current != NULL) {
@@ -959,11 +1017,17 @@ void freePatientList(PatientList* list) {
     list->count = 0;
 }
 
+/**
+ * Clears the input buffer of the program.
+ */
 void clearBuffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
+/**
+ * Halts the program until the user presses enter.
+ */
 void waitForUser() {
     printf("\nPress Enter to continue...");
     clearBuffer();
