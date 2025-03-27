@@ -16,10 +16,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h> // Make sure time.h is included
+#include <time.h>
 
-#define INITIAL_CAPACITY 10       // Note: Not actually used with linked list
-#define GROWTH_FACTOR 2           // Note: Not actually used with linked list
+#define INITIAL_CAPACITY 10
+#define GROWTH_FACTOR 2
 #define MAX_CHARS_IN_NAME 100
 #define MAX_CHARS_IN_DIAGNOSIS 200
 #define MIN_AGE 0
@@ -182,7 +182,6 @@ int main() {
 
 // --- Helper Functions ---
 
-// Helper to format time_t into "YYYY-MM-DD HH:MM"
 void formatTime(time_t rawTime, char* buffer, size_t bufferSize) {
     if (rawTime == 0) { // Handle cases where date might be uninitialized or explicitly zero
         snprintf(buffer, bufferSize, "N/A");
@@ -332,7 +331,6 @@ PatientNode* searchPatient(const PatientList* list, int patientID) {
     return NULL; // Not found
 }
 
-// MODIFIED: Now marks patient as discharged by setting the date, doesn't remove node.
 void dischargePatient(PatientList* list, int patientID) {
     PatientNode *patient = searchPatient(list, patientID);
 
@@ -363,7 +361,6 @@ void dischargePatient(PatientList* list, int patientID) {
 
 
 // --- Doctor Schedule Functions ---
-// (No changes needed in schedule functions for patient date modifications)
 
 void manageDoctorSchedules(DoctorSchedule* schedule) {
     int choice;
@@ -561,8 +558,6 @@ void generateReports(const PatientList* list, const DoctorSchedule* schedule) {
 
 // --- Data Persistence Functions ---
 
-// WARNING: Saving raw structs containing pointers is generally unsafe.
-// This works here ONLY because loadData reconstructs the list pointers.
 void saveData(const PatientList* list, const DoctorSchedule* schedule) {
     // Save Patients
     FILE* patientFile = fopen(FILENAME_PATIENTS, "wb");
@@ -599,7 +594,6 @@ void saveData(const PatientList* list, const DoctorSchedule* schedule) {
     printf("\nData saving process completed. %d patient records processed.\n", nodesWritten);
 }
 
-// Loads data, reconstructing the linked list.
 int loadData(PatientList* list, DoctorSchedule* schedule) {
     int patientsLoaded = 0;
     int scheduleLoaded = 0;
