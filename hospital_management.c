@@ -66,7 +66,7 @@ int loadData(PatientList* list, DoctorSchedule* schedule);
 void freePatientList(PatientList* list);
 void clearBuffer();
 void waitForUser();
-void formatTime(time_t rawTime, char* buffer, size_t bufferSize); // Helper for date formatting
+void formatTime(time_t rawTime, char* buffer, size_t bufferSize);
 
 // --- Main Function ---
 int main() {
